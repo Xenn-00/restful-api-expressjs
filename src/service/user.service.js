@@ -1,8 +1,9 @@
-import { registerUserValidation } from "../validation/user.validation.js"
+import { loginUserValidation, registerUserValidation } from "../validation/user.validation.js"
 import { validate } from "../validation/validation.js"
 import { primaclient } from "../app/database.js"
 import { ResponseError } from "../error/response.error.js"
 import bcrypt from "bcrypt"
+import { sign } from "../util/jwt.js"
 
 const register = async (req) => {
     const user = validate(registerUserValidation, req)
@@ -24,9 +25,38 @@ const register = async (req) => {
             name: true,
         }
     })
+}
 
+const login = async (req) => {
+    const loginRequest = validate(loginUserValidation, req)
+    const user = await primaclient.user.findUnique({
+        where: {
+            username: loginRequest.username
+        },
+        select: {
+            username: true,
+            password: true
+        }
+    })
+    if (!user) throw new ResponseError(401, "Username or password wrong")
+
+    const isPasswordValid = await bcrypt.compare(loginRequest.password, user.password)
+    if (!isPasswordValid) throw new ResponseError(401, "Username or password wrong")
+    const token = sign(user, process.env.ACCESS_TOKEN_SECRET)
+    return primaclient.user.update({
+        data: {
+            token: token
+        },
+        where: {
+            username: user.username
+        },
+        select: {
+            token: true
+        }
+    })
 }
 
 export default {
-    register
+    register,
+    login
 }
