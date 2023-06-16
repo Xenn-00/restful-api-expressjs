@@ -17,6 +17,7 @@ const createTestUser = async () => {
             username: "Fuma",
             password: await bcrypt.hash("Wazxse34", 10),
             name: "Fuma zakko",
+            token: "test"
         }
     })
 }
@@ -53,9 +54,17 @@ const loginTestUser = async () => {
     return result.token
 }
 
+const getTestUser = async () => {
+    return primaclient.user.findUnique({
+        where: {
+            username: "Fuma"
+        }
+    })
+}
 
 export {
     removeTestUser,
     createTestUser,
-    loginTestUser
+    loginTestUser,
+    getTestUser
 }
