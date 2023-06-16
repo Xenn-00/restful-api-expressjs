@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken"
-import { ResponseError } from "../error/response.error"
+import { ResponseError } from "../error/response.error.js"
 
 const sign = (user, secret_token) => {
     const accessToken = jwt.sign(user, secret_token, { expiresIn: "7d" })
