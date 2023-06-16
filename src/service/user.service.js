@@ -1,8 +1,7 @@
-import { getUserValidation, loginUserValidation, registerUserValidation } from "../validation/user.validation.js"
+import { getUserValidation, loginUserValidation, registerUserValidation, updateUserValidation } from "../validation/user.validation.js"
 import { validate } from "../validation/validation.js"
 import { primaclient } from "../app/database.js"
 import { ResponseError } from "../error/response.error.js"
-import crypto from "crypto"
 import bcrypt from "bcrypt"
 import { sign } from "../util/jwt.js"
 
@@ -74,8 +73,36 @@ const get = async (username) => {
     return user
 }
 
+const update = async (req) => {
+    const user = validate(updateUserValidation, req)
+    const countUser = await primaclient.user.count({
+        where: {
+            username: user.username
+        }
+    })
+    if (countUser !== 1) throw new ResponseError(404, "User is not found")
+    const data = {}
+    if (user.name) {
+        data.name = user.name
+    }
+    if (user.password) {
+        data.password = await bcrypt.hash(user.password, 10)
+    }
+    return primaclient.user.update({
+        where: {
+            username: user.username
+        },
+        data: data,
+        select: {
+            username: true,
+            name: true
+        }
+    })
+}
+
 export default {
     register,
     login,
-    get
+    get,
+    update
 }
