@@ -1,13 +1,9 @@
 import supertest from "supertest"
 import { web } from "../../src/app/web.js"
 import { logger } from "../../src/app/logging.js"
-import { createTestUser, removeTestUser } from "../test-util.js"
+import { createTestUser, removeTestUser } from "./test-util.js"
 
 describe('POST /api/users', function () {
-    beforeEach(async () => {
-        await createTestUser()
-    })
-
     afterEach(async () => {
         await removeTestUser()
     })
@@ -18,11 +14,11 @@ describe('POST /api/users', function () {
             .send({
                 username: "Fuma",
                 password: "Wazxse34",
-                name: "Fuma zako"
+                name: "Fuma zakko"
             })
         expect(result.status).toBe(200)
         expect(result.body.data.username).toBe("Fuma")
-        expect(result.body.data.name).toBe("Fuma zako")
+        expect(result.body.data.name).toBe("Fuma zakko")
         expect(result.body.data.password).toBeUndefined()
     })
 
@@ -33,7 +29,7 @@ describe('POST /api/users', function () {
             .send({
                 username: "",
                 password: "",
-                name: "Fuma zako"
+                name: "Fuma zakko"
             })
         logger.info(result.body)
         expect(result.status).toBe(400)
@@ -46,11 +42,11 @@ describe('POST /api/users', function () {
             .send({
                 username: "Fuma",
                 password: "Wazxse34",
-                name: "Fuma zako"
+                name: "Fuma zakko"
             })
         expect(result.status).toBe(200)
         expect(result.body.data.username).toBe("Fuma")
-        expect(result.body.data.name).toBe("Fuma zako")
+        expect(result.body.data.name).toBe("Fuma zakko")
         expect(result.body.data.password).toBeUndefined()
 
         result = await supertest(web)
@@ -58,7 +54,7 @@ describe('POST /api/users', function () {
             .send({
                 username: "Fuma",
                 password: "Wazxse34",
-                name: "Fuma zako"
+                name: "Fuma zakko"
             })
         logger.info(result.body)
         expect(result.status).toBe(400)
