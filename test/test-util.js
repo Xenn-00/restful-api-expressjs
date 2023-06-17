@@ -81,6 +81,19 @@ const createTestContact = async () => {
         }
     })
 }
+const createManyTestContact = async () => {
+    for (let i = 0; i < 15; i++) {
+        await primaclient.contact.create({
+            data: {
+                username: "Fuma",
+                first_name: `Fuma ${i}`,
+                last_name: `zakko ${i}`,
+                email: "fumaZakko@hololiven.com",
+                phone: "+81267122387"
+            }
+        })
+    }
+}
 const getTestContact = async () => {
     return primaclient.contact.findFirst({
         where: {
@@ -96,5 +109,6 @@ export {
     getTestUser,
     createTestContact,
     getTestContact,
-    removeAllTestContacts
+    removeAllTestContacts,
+    createManyTestContact
 }
