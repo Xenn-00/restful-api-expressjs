@@ -1,5 +1,5 @@
 import supertest from "supertest"
-import { createTestUser, getTestUser, loginTestUser, removeTestUser } from "./test-util.js"
+import { createTestUser, getTestUser, loginTestUser, removeTestUser } from "../test-util.js"
 import { web } from "../../src/app/web.js"
 import { logger } from "../../src/app/logging.js"
 

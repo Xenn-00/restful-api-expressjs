@@ -1,5 +1,5 @@
 import supertest from "supertest"
-import { createTestUser, getTestUser, loginTestUser, removeTestUser } from "./test-util.js"
+import { createTestUser, getTestUser, loginTestUser, removeTestUser } from "../test-util.js"
 import { web } from "../../src/app/web.js"
 import { logger } from "../../src/app/logging.js"
 import bcrypt from "bcrypt"
@@ -53,7 +53,7 @@ describe("PATCH /api/users/current", function () {
             .patch('/api/users/current')
             .set("Authorization", token)
             .send({
-                password : "test123"
+                password: "test123"
             })
 
         logger.info(result.body)
