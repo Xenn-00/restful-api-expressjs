@@ -102,6 +102,16 @@ const getTestContact = async () => {
     })
 }
 
+const removeAllTestAddresses = async () => {
+    await primaclient.address.deleteMany({
+        where: {
+            contact: {
+                username: "Fuma"
+            }
+        }
+    })
+}
+
 export {
     removeTestUser,
     createTestUser,
@@ -110,5 +120,6 @@ export {
     createTestContact,
     getTestContact,
     removeAllTestContacts,
-    createManyTestContact
+    createManyTestContact,
+    removeAllTestAddresses
 }
