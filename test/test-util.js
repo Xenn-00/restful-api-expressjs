@@ -112,6 +112,45 @@ const removeAllTestAddresses = async () => {
     })
 }
 
+const createTestAddress = async () => {
+    const contact = await getTestContact()
+    await primaclient.address.create({
+        data: {
+            contact_id: contact.id,
+            street: "Test street",
+            city: "City A",
+            province: "Province B",
+            country: "Country J",
+            postal_code: "62217"
+        }
+    })
+}
+
+const createManyTestAddress = async () => {
+    const contact = await getTestContact()
+    for (let i = 1; i < 4; i++) {
+        await primaclient.address.create({
+            data: {
+                contact_id: contact.id,
+                street: `Test street ${i}`,
+                city: `City A ${1}`,
+                province: "Province B",
+                country: "Country J",
+                postal_code: "62217"
+            }
+        })
+    }
+}
+
+const getTestAddress = async () => {
+    const contact = await getTestContact()
+    return primaclient.address.findFirst({
+        where: {
+            contact_id: contact.id
+        }
+    })
+}
+
 export {
     removeTestUser,
     createTestUser,
@@ -121,5 +160,8 @@ export {
     getTestContact,
     removeAllTestContacts,
     createManyTestContact,
-    removeAllTestAddresses
+    removeAllTestAddresses,
+    createTestAddress,
+    getTestAddress,
+    createManyTestAddress
 }
