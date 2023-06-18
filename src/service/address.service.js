@@ -7,7 +7,6 @@ import crypto from "crypto"
 
 const create = async (user, contactId, request) => {
     contactId = validate(getContactValidation, contactId)
-    console.log("service hit")
     const countCountact = await primaclient.contact.count({
         where: {
             username: user.username,
