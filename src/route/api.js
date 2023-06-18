@@ -21,6 +21,12 @@ userRouter.get("/api/contacts", contactController.search)
 
 // Address API
 userRouter.post("/api/contacts/:contactId/address", addressController.create)
+userRouter.get("/api/contacts/:contactId/address/:addressId", addressController.get)
+userRouter.put("/api/contacts/:contactId/address/:addressId", addressController.update)
+userRouter.get("/api/contacts/:contactId/address", addressController.list)
+userRouter.delete("/api/contacts/:contactId/address/:addressId", addressController.remove)
+
+
 
 export {
     userRouter
