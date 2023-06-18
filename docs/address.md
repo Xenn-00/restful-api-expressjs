@@ -45,7 +45,7 @@ Response body failed :
 
 ## Update Address API
 
-- PUT `api/contacts/:contactId/address`
+- PUT `api/contacts/:contactId/address/:addressId`
 
 Headers :
 
