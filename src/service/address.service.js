@@ -100,9 +100,15 @@ const list = async (user, contactId) => {
 
     const address = await primaclient.address.findMany({
         where: {
-            contact: {
-                username: user.username
-            }
+            contact_id: contactId
+        },
+        select: {
+            id: true,
+            street: true,
+            city: true,
+            province: true,
+            country: true,
+            postal_code: true
         }
     })
     return address
