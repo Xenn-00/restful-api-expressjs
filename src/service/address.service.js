@@ -63,6 +63,16 @@ const get = async (user, contactId, addressId) => {
 const update = async (user, contactId, request) => {
     contactId = await checkContactExist(user, contactId)
     const address = validate(updateAddressValidation, request)
+
+    const countAddress = await primaclient.address.count({
+        where: {
+            contact_id: contactId,
+            id: address.id
+        }
+    })
+
+    if (countAddress !== 1) throw new ResponseError(404, "Address not found")
+
     return primaclient.address.update({
         where: {
             id: address.id
