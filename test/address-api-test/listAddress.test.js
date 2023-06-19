@@ -16,7 +16,7 @@ describe("GET /api/contacts/:contactId/address", function () {
         await removeTestUser()
     })
 
-    it("should can get contact", async function () {
+    it("should can get list of addresses", async function () {
         const token = await loginTestUser()
         const contact = await getTestContact()
         const result = await supertest(web)
